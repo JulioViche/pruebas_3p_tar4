@@ -1,0 +1,359 @@
+\documentclass[12pt,a4paper]{article}
+
+% ============================================================
+% Paquetes
+% ============================================================
+\usepackage[utf8]{inputenc}
+\usepackage[spanish]{babel}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{hyperref}
+\usepackage{titlesec}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{parskip}
+\usepackage{booktabs}
+\usepackage{listings}
+\usepackage{tcolorbox}
+\usepackage{float}
+
+% ============================================================
+% Configuración de página
+% ============================================================
+\geometry{
+    left=2.5cm,
+    right=2.5cm,
+    top=2.5cm,
+    bottom=2.5cm
+}
+
+% ============================================================
+% Colores personalizados
+% ============================================================
+\definecolor{primaryblue}{RGB}{0, 82, 155}
+\definecolor{accentblue}{RGB}{0, 123, 193}
+\definecolor{codegray}{RGB}{245, 245, 245}
+\definecolor{codegreen}{RGB}{40, 167, 69}
+
+% ============================================================
+% Configuración de hyperref
+% ============================================================
+\hypersetup{
+    colorlinks=true,
+    linkcolor=primaryblue,
+    urlcolor=accentblue,
+    citecolor=primaryblue,
+    pdfauthor={Julio Viche},
+    pdftitle={Informe de Práctica: Proyecto Node.js con CI},
+    pdfsubject={Pruebas de Software}
+}
+
+% ============================================================
+% Configuración de títulos
+% ============================================================
+\titleformat{\section}
+    {\normalfont\Large\bfseries\color{primaryblue}}
+    {\thesection}{1em}{}[\titlerule]
+
+\titleformat{\subsection}
+    {\normalfont\large\bfseries\color{accentblue}}
+    {\thesubsection}{1em}{}
+
+% ============================================================
+% Configuración de encabezados y pies de página
+% ============================================================
+\pagestyle{fancy}
+\fancyhf{}
+\fancyhead[L]{\footnotesize\textcolor{gray}{Pruebas de Software}}
+\fancyhead[R]{\footnotesize\textcolor{gray}{Julio Viche}}
+\fancyfoot[C]{\thepage}
+\renewcommand{\headrulewidth}{0.4pt}
+\renewcommand{\footrulewidth}{0pt}
+
+% ============================================================
+% Configuración de listings para código
+% ============================================================
+\lstset{
+    backgroundcolor=\color{codegray},
+    basicstyle=\ttfamily\small,
+    breaklines=true,
+    frame=single,
+    rulecolor=\color{gray!30},
+    xleftmargin=0.5cm,
+    xrightmargin=0.5cm
+}
+
+% ============================================================
+% Ruta de imágenes
+% ============================================================
+\graphicspath{{img/}}
+
+% ============================================================
+% Documento
+% ============================================================
+\begin{document}
+
+% ============================================================
+% Portada
+% ============================================================
+\begin{titlepage}
+    \centering
+    \vspace*{2cm}
+    
+    {\Huge\bfseries\color{primaryblue} Informe de Práctica\par}
+    \vspace{0.5cm}
+    {\LARGE\color{accentblue} Proyecto Node.js con CI\par}
+    
+    \vspace{2cm}
+    
+    \begin{tcolorbox}[
+        colback=primaryblue!5,
+        colframe=primaryblue,
+        width=0.85\textwidth,
+        arc=3mm,
+        boxrule=1pt
+    ]
+        \centering
+        \renewcommand{\arraystretch}{1.5}
+        \begin{tabular}{rl}
+            \textbf{Estudiante:} & Julio Viche \\
+            \textbf{Materia:} & Pruebas de Software \\
+            \textbf{Docente:} & Ing. Enrique Calvopiña \\
+            \textbf{Fecha:} & 22 de enero de 2026 \\
+        \end{tabular}
+    \end{tcolorbox}
+    
+    \vspace{1.5cm}
+    
+    {\large\textbf{Tema:}\par}
+    {\large Desarrollo de proyecto Node.js con pruebas unitarias y CI\par}
+    
+    \vfill
+    
+\end{titlepage}
+
+% ============================================================
+% Tabla de contenidos
+% ============================================================
+\tableofcontents
+\newpage
+
+% ============================================================
+% Introducción
+% ============================================================
+\section{Introducción}
+
+Este informe documenta el desarrollo de un proyecto Node.js siguiendo la guía proporcionada por el docente. Se implementó una estructura básica, pruebas unitarias, configuración de ESLint y un flujo de integración continua (CI) con GitHub Actions. Se incluyen evidencias de cada paso realizado.
+
+% ============================================================
+% Objetivos
+% ============================================================
+\section{Objetivos}
+
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+    \item Implementar la estructura base de un proyecto Node.js.
+    \item Configurar dependencias y herramientas de calidad de código.
+    \item Desarrollar pruebas unitarias y asegurar su ejecución automática mediante CI.
+    \item Documentar el proceso y resultados obtenidos.
+\end{itemize}
+
+% ============================================================
+% Desarrollo
+% ============================================================
+\section{Desarrollo}
+
+\subsection{Estructura del Proyecto}
+
+Se creó la siguiente estructura de carpetas y archivos:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.3\textwidth]{part1_step1.png}
+    \caption{Estructura del repositorio}
+\end{figure}
+
+\subsection{Instalación de Dependencias}
+
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+    \item Inicialización del proyecto: \lstinline|npm init -y|
+    \item Instalación de Express: \lstinline|npm install express|
+    \item Instalación de Jest y ESLint: \lstinline|npm install --save-dev jest eslint|
+\end{itemize}
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{part1_step2.png}
+    \caption{Instalación de dependencias}
+\end{figure}
+
+\subsection{Creación de Archivos Base}
+
+\textbf{index.js:} Servidor Express con endpoint básico.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{part2_step1.png}
+    \caption{Archivo index.js}
+\end{figure}
+
+\textbf{sum.js:} Función de suma exportable.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{part2_step2.png}
+    \caption{Archivo sum.js}
+\end{figure}
+
+\textbf{sum.test.js:} Prueba unitaria para suma.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{part2_step3.png}
+    \caption{Archivo sum.test.js}
+\end{figure}
+
+\textbf{math.js:} Funciones factorial y fibonacci.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.9\textwidth]{activities_math.png}
+    \caption{Archivo math.js}
+\end{figure}
+
+\textbf{math.test.js:} Pruebas unitarias para factorial y fibonacci.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{activities_math_test.png}
+    \caption{Archivo math.test.js}
+\end{figure}
+
+\subsection{Configuración de Scripts y ESLint}
+
+Scripts en \texttt{package.json} para start, test y lint.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.6\textwidth]{part2_step4.png}
+    \caption{Archivo package.json con scripts configurados}
+\end{figure}
+
+Configuración de ESLint en formato flat config en \texttt{eslint.config.js}.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{part2_step5.png}
+    \caption{Archivo eslint.config.js}
+\end{figure}
+
+Se utilizó \texttt{.gitignore} para \texttt{node\_modules} y archivos temporales.
+
+\subsection{Configuración de Git y CI}
+
+Inicialización de repositorio Git y primer commit.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{part3_step2.png}
+    \caption{Repositorio en GitHub}
+\end{figure}
+
+Configuración de GitHub Actions en \texttt{.github/workflows/ci.yml} para ejecutar lint y pruebas en cada push o pull request.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.5\textwidth]{part3_step3.png}
+    \caption{Archivo ci.yml de GitHub Actions}
+\end{figure}
+
+Evidencia del funcionamiento de GitHub Actions.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{part3_step4.png}
+    \caption{GitHub Actions en funcionamiento}
+\end{figure}
+
+\subsection{Actividades con GitHub Actions}
+
+Al pushear \texttt{math.js} y \texttt{math.test.js}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{activities_step1.png}
+    \caption{Actividad 1: Push de archivos math}
+\end{figure}
+
+Se modificó \texttt{sum.js} agregando un fallo a propósito.
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.7\textwidth]{activities_intentional_error.png}
+    \caption{Error intencional en sum.js}
+\end{figure}
+
+Al pushear el cambio en \texttt{sum.js}:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{activities_step2.png}
+    \caption{Actividad 2: CI detecta el error}
+\end{figure}
+
+Al corregir y pushear otra vez:
+
+\begin{figure}[H]
+    \centering
+    \includegraphics[width=0.8\textwidth]{activities_correction.png}
+    \caption{Corrección del error y CI exitoso}
+\end{figure}
+
+% ============================================================
+% Resultados Obtenidos
+% ============================================================
+\section{Resultados Obtenidos}
+
+\begin{itemize}[leftmargin=*, itemsep=0.3em]
+    \item Se demostró cómo se ejecutan pruebas de manera automática en \texttt{sum.js} y \texttt{math.js} usando \texttt{sum.test.js} y \texttt{math.test.js} respectivamente en GitHub Actions.
+    \item Se demostró que se detectan errores de manera efectiva.
+\end{itemize}
+
+% ============================================================
+% Conclusiones
+% ============================================================
+\section{Conclusiones}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.5em]
+    \item La integración de pruebas unitarias y flujos de CI en proyectos Node.js permite detectar errores de manera temprana y automática, mejorando la calidad del software.
+    
+    \item Se presentó un inconveniente con la configuración de ESLint, ya que la versión utilizada requiere el nuevo formato Flat Config (\texttt{export default}), lo que obligó a adaptar la configuración en el commit \href{https://github.com/JulioViche/pruebas_3p_tar4/commit/bf74fd05633e93f785d238400bf569ad52cb98ec}{bf74fd0} para que ESLint funcionara correctamente en la versión 9+.
+    
+    \item Se documentó y evidenció cada paso para facilitar la comprensión y replicabilidad del proceso.
+\end{enumerate}
+
+% ============================================================
+% Recomendaciones
+% ============================================================
+\section{Recomendaciones}
+
+\begin{enumerate}[leftmargin=*, itemsep=0.5em]
+    \item Verificar siempre la versión de las herramientas instaladas y consultar la documentación oficial para evitar problemas de compatibilidad, como ocurrió con ESLint.
+    
+    \item Mantener el código y las configuraciones actualizadas según las mejores prácticas recomendadas por la comunidad.
+    
+    \item Comentar el código y documentar el proceso para facilitar el mantenimiento y la colaboración en equipo.
+\end{enumerate}
+
+% ============================================================
+% Anexos
+% ============================================================
+\section{Anexos}
+
+\begin{itemize}[leftmargin=*]
+    \item \href{https://github.com/JulioViche/pruebas_3p_tar4}{Repositorio público de GitHub}
+\end{itemize}
+
+\end{document}
