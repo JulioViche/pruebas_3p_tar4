@@ -1,7 +1,7 @@
 // Función que suma dos números
 // Recibe dos parámetros numéricos y retorna su suma
 function sum(a, b) {
-  return a + b;
+  return a + a;
 }
 
 // Exportar la función para su uso en otros archivos
